@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('/', 'IndexController@homePage');
+Route::view('/{path?}', 'app');
