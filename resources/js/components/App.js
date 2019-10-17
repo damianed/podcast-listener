@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import SearchBar from './SearchBar'
 
 export default class Example extends Component {
     render() {
         return (
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-md-8">
-                        <div className="col-md-12">
-                            <input className="col-md-12" type="text" placeholder="Type podcast name to search"></input>
-                            
-                        </div>
-                    </div>
+                    <SearchBar />
                 </div>
             </div>
         );

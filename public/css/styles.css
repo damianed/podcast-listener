@@ -1,0 +1,12 @@
+#searchbar {
+    margin-top: 100px;
+}
+
+#addon-wrapping {
+    background: white;
+    border-left: 0px;
+}
+
+#searchInput{
+    border-right: 0px;
+}
