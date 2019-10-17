@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import SearchResult from './SearchResult';
 
 class SearchBar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            props: props,
+        };
+    }
+
     render() {
         return (
             <div id="searchbar" className="col-md-8 input-group flex-nowrap">
-                <input id="searchInput" className="form-control" type="text" placeholder="Type podcast name to search"></input>
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="addon-wrapping">
+                <input id="searchInput" className="form-control" type="text" placeholder="Type podcast name to search" onChange={this.state.props.onChange.bind(this)}></input>
+                <div className="input-group-prepend">
+                    <span className="input-group-text" id="addon-wrapping">
                         <FontAwesomeIcon className="align-middle" icon={faSearch}/>
                     </span>
                 </div>
