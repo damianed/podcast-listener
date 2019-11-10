@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import SearchBar from './SearchBar'
 import SearchResult from './SearchResult'
+import ApiPetitions from '../ApiPetitions.js';
 
 export default class App extends Component {
     constructor(props) {
@@ -10,14 +11,21 @@ export default class App extends Component {
             results: []
         }
     }
-    handleSearchBarInput() {
-        this.setState({results: [<SearchResult />]})
+    handleSearchBarInput(target) {
+        console.log(target.value);
+        let podcastResults = ApiPetitions.searchPodcast(target.value);
+        let searchResults = [];
+        for(const result of podcastResults){
+          searchResults.push(<SearchResult key={result.id} name={result.name} description={result.description}/>);
+        }
+        this.setState({results: searchResults});
     }
+
     render() {
         return (
             <div className="container">
                 <div className="row justify-content-center">
-                    <SearchBar onChange={() => this.handleSearchBarInput(this)} />
+                    <SearchBar onChange={(target) => this.handleSearchBarInput(target)} />
                     {this.state.results}
                 </div>
             </div>

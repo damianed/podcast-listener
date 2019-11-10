@@ -62038,6 +62038,32 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/ApiPetitions.js":
+/*!**************************************!*\
+  !*** ./resources/js/ApiPetitions.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function searchPodcast(keyword) {
+  if (keyword === "") return [];
+  var mockArray = [1, 2, 3, 4, 5];
+  var mockResults = mockArray.map(function (value) {
+    return {
+      'id': value,
+      'name': 'Podcast Name',
+      'description': 'Something that describes podcast number' + value
+    };
+  });
+  return mockResults;
+}
+
+module.exports = {
+  searchPodcast: searchPodcast
+};
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -62110,6 +62136,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SearchBar */ "./resources/js/components/SearchBar.js");
 /* harmony import */ var _SearchResult__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SearchResult */ "./resources/js/components/SearchResult.js");
+/* harmony import */ var _ApiPetitions_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ApiPetitions.js */ "./resources/js/ApiPetitions.js");
+/* harmony import */ var _ApiPetitions_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_ApiPetitions_js__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -62127,6 +62155,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -62152,9 +62181,40 @@ function (_Component) {
 
   _createClass(App, [{
     key: "handleSearchBarInput",
-    value: function handleSearchBarInput() {
+    value: function handleSearchBarInput(target) {
+      console.log(target.value);
+      var podcastResults = _ApiPetitions_js__WEBPACK_IMPORTED_MODULE_4___default.a.searchPodcast(target.value);
+      var searchResults = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = podcastResults[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var result = _step.value;
+          searchResults.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchResult__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            key: result.id,
+            name: result.name,
+            description: result.description
+          }));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
       this.setState({
-        results: [react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchResult__WEBPACK_IMPORTED_MODULE_3__["default"], null)]
+        results: searchResults
       });
     }
   }, {
@@ -62167,8 +62227,8 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row justify-content-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        onChange: function onChange() {
-          return _this2.handleSearchBarInput(_this2);
+        onChange: function onChange(target) {
+          return _this2.handleSearchBarInput(target);
         }
       }), this.state.results));
     }
@@ -62242,6 +62302,8 @@ function (_Component) {
   _createClass(SearchBar, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "searchbar",
         className: "col-md-8 input-group flex-nowrap"
@@ -62250,7 +62312,9 @@ function (_Component) {
         className: "form-control",
         type: "text",
         placeholder: "Type podcast name to search",
-        onChange: this.state.props.onChange.bind(this)
+        onChange: function onChange(e) {
+          return _this2.state.props.onChange(e.target);
+        }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "input-group-prepend"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -62306,10 +62370,10 @@ var SearchResult =
 function (_Component) {
   _inherits(SearchResult, _Component);
 
-  function SearchResult() {
+  function SearchResult(props) {
     _classCallCheck(this, SearchResult);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SearchResult).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(SearchResult).call(this, props));
   }
 
   _createClass(SearchResult, [{
@@ -62321,9 +62385,9 @@ function (_Component) {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "card-title"
-      }, "Podcast Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, this.props.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "cart-text"
-      }, "Some podcast description")));
+      }, this.props.description)));
     }
   }]);
 
